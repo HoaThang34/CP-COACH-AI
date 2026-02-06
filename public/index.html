@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CP Coach AI - Luyện thi HSG Tin học</title>
+
+    <!-- Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked-katex-extension/lib/index.umd.js"></script>
+    <!-- Optional or custom -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#09090b',
+                        surface: '#18181b',
+                        surfaceHighlight: '#27272a',
+                        text: '#e4e4e7',
+                        muted: '#a1a1aa',
+                        primary: '#fafafa',
+                        accent: '#3f3f46',
+                    },
+                    fontFamily: {
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", 'monospace'],
+                    }
+                },
+            },
+        };
+    </script>
+</head>
+
+<body class="bg-background text-text font-sans overflow-hidden h-screen flex flex-col">
+
+    <!-- Header -->
+    <header
+        class="h-14 border-b border-surfaceHighlight flex items-center px-6 bg-surface/50 backdrop-blur-sm z-10 shrink-0 print-hidden">
+        <div class="flex items-center gap-3 text-primary">
+            <div class="bg-primary text-black p-1.5 rounded">
+                <i data-lucide="cpu" class="w-5 h-5" stroke-width="2.5"></i>
+            </div>
+            <span class="font-bold tracking-tight text-lg">CP Coach AI</span>
+        </div>
+        <div class="ml-auto flex items-center gap-4 text-xs text-muted">
+            <span class="hidden md:inline">Luyện thi HSG Tin học</span>
+            <div class="h-4 w-[1px] bg-surfaceHighlight"></div>
+            <span>Powered by Gemini 2.0</span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex overflow-hidden">
+
+        <!-- Sidebar (Control Panel) -->
+        <aside
+            class="w-64 bg-background border-r border-surfaceHighlight p-4 hidden md:flex flex-col shrink-0 print-hidden"
+            id="control-panel">
+            <div class="w-full h-full flex flex-col gap-6 p-1">
+                <!-- Tabs -->
+                <div class="flex bg-surface rounded p-1 border border-surfaceHighlight">
+                    <button
+                        class="flex-1 flex items-center justify-center gap-2 py-1.5 rounded text-xs font-bold transition-all bg-accent text-white shadow mode-btn"
+                        data-mode="standard" title="Tạo đề theo chủ đề">
+                        <i data-lucide="list-filter" class="w-3 h-3"></i> <span class="hidden sm:inline">Chủ Đề</span>
+                    </button>
+                    <button
+                        class="flex-1 flex items-center justify-center gap-2 py-1.5 rounded text-xs font-bold transition-all text-muted hover:text-text mode-btn"
+                        data-mode="custom" title="Tạo đề tùy chỉnh">
+                        <i data-lucide="sparkles" class="w-3 h-3"></i> <span class="hidden sm:inline">Tự Chọn</span>
+                    </button>
+                    <button
+                        class="flex-1 flex items-center justify-center gap-2 py-1.5 rounded text-xs font-bold transition-all text-muted hover:text-text mode-btn"
+                        data-mode="history" title="Lịch sử đề bài">
+                        <i data-lucide="history" class="w-3 h-3"></i> <span class="hidden sm:inline">Lịch Sử</span>
+                    </button>
+                </div>
+
+                <!-- Config Views -->
+                <div id="config-standard"
+                    class="space-y-4 flex-1 overflow-y-auto custom-scrollbar pr-1 animate-in fade-in duration-300">
+                    <div>
+                        <label class="block text-xs font-bold text-muted uppercase mb-2 flex items-center gap-2">
+                            <i data-lucide="book-open" class="w-3 h-3"></i> Chủ đề
+                        </label>
+                        <select id="config-topic"
+                            class="w-full bg-surface border border-surfaceHighlight rounded px-3 py-2 text-sm text-text focus:outline-none focus:border-muted appearance-none">
+                            <option value="" disabled selected>Chọn chủ đề</option>
+                            <option value="Mảng & Chuỗi">Mảng & Chuỗi</option>
+                            <option value="Quy hoạch động">Quy hoạch động</option>
+                            <option value="Đồ thị (BFS/DFS/Dijkstra)">Đồ thị (BFS/DFS/Dijkstra)</option>
+                            <option value="Tham lam (Greedy)">Tham lam (Greedy)</option>
+                            <option value="Toán học & Số học">Toán học & Số học</option>
+                            <option value="Cấu trúc dữ liệu">Cấu trúc dữ liệu</option>
+                            <option value="Đệ quy & Quay lui">Đệ quy & Quay lui</option>
+                            <option value="Tổ hợp">Tổ hợp</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-muted uppercase mb-2 flex items-center gap-2">
+                            <i data-lucide="settings-2" class="w-3 h-3"></i> Độ khó mong muốn
+                        </label>
+                        <div class="grid grid-cols-1 gap-2" id="difficulty-options">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <div id="config-custom"
+                    class="space-y-4 flex-1 overflow-y-auto custom-scrollbar pr-1 animate-in fade-in duration-300 hidden">
+                    <div>
+                        <label class="block text-xs font-bold text-muted uppercase mb-2 flex items-center gap-2">
+                            <i data-lucide="sparkles" class="w-3 h-3"></i> Yêu cầu đề bài
+                        </label>
+                        <textarea id="config-custom-prompt"
+                            class="w-full h-32 bg-surface border border-surfaceHighlight rounded px-3 py-2 text-sm text-text focus:outline-none focus:border-muted resize-none placeholder-muted/50"
+                            placeholder="VD: Hãy tạo một bài đồ thị về tìm đường đi ngắn nhất..."></textarea>
+                        <p class="text-[10px] text-muted mt-2 leading-tight">AI sẽ phân tích yêu cầu của bạn để tạo ra
+                            đề bài chuẩn format HSG.</p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-muted uppercase mb-2 flex items-center gap-2">
+                            <i data-lucide="settings-2" class="w-3 h-3"></i> Độ khó (Ước lượng)
+                        </label>
+                        <div class="grid grid-cols-1 gap-2" id="difficulty-options-custom">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <div id="config-history"
+                    class="space-y-3 flex-1 overflow-y-auto custom-scrollbar pr-1 animate-in fade-in duration-300 hidden">
+                    <div id="history-list">
+                        <!-- Populated by JS -->
+                        <div class="text-center py-10 text-muted">
+                            <i data-lucide="history" class="w-10 h-10 mx-auto mb-2 opacity-20"></i>
+                            <p class="text-xs">Chưa có lịch sử đề bài.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Common: Language -->
+                <div id="config-language-container">
+                    <label class="block text-xs font-bold text-muted uppercase mb-2 flex items-center gap-2">
+                        <i data-lucide="terminal" class="w-3 h-3"></i> Ngôn ngữ lập trình
+                    </label>
+                    <select id="config-language"
+                        class="w-full bg-surface border border-surfaceHighlight rounded px-3 py-2 text-sm text-text focus:outline-none focus:border-muted">
+                        <option value="C++">C++ (Standard)</option>
+                        <option value="Python">Python 3</option>
+                        <option value="Java">Java</option>
+                        <option value="Pascal">Pascal</option>
+                    </select>
+                </div>
+
+                <!-- Generate Button -->
+                <button id="btn-generate"
+                    class="mt-auto w-full py-3 rounded font-bold text-sm tracking-wide uppercase transition-all bg-primary text-black hover:bg-white disabled:bg-surfaceHighlight disabled:text-muted disabled:cursor-not-allowed">
+                    Sinh đề bài mới
+                </button>
+            </div>
+        </aside>
+
+        <!-- Content Area -->
+        <div class="flex-1 flex flex-col md:flex-row h-full overflow-hidden relative">
+
+            <!-- Problem Panel -->
+            <section
+                class="flex-1 h-1/2 md:h-full md:w-1/2 p-6 border-b md:border-b-0 md:border-r border-surfaceHighlight overflow-hidden relative problem-section"
+                id="problem-panel">
+
+                <div id="problem-loading"
+                    class="hidden h-full flex flex-col items-center justify-center text-muted animate-pulse">
+                    <div
+                        class="w-12 h-12 border-4 border-surfaceHighlight border-t-text rounded-full animate-spin mb-4">
+                    </div>
+                    <p>Đang sinh đề bài chuẩn HSG...</p>
+                </div>
+
+                <div id="problem-empty"
+                    class="h-full flex flex-col items-center justify-center text-muted p-8 text-center">
+                    <i data-lucide="database" class="w-16 h-16 mb-4 opacity-20"></i>
+                    <h3 class="text-xl font-medium text-text mb-2">Chưa có đề bài</h3>
+                    <p class="text-sm">Vui lòng chọn chủ đề hoặc nhập yêu cầu để bắt đầu luyện tập.</p>
+                </div>
+
+                <div id="problem-content-container" class="hidden h-full flex flex-col">
+                    <!-- Toolbar -->
+                    <div
+                        class="flex justify-between items-start mb-6 border-b border-surfaceHighlight pb-4 print-hidden shrink-0">
+                        <div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <span id="prob-difficulty"
+                                    class="text-xs font-bold px-2 py-0.5 rounded bg-accent text-text uppercase tracking-wider">EASY</span>
+                                <span id="prob-topic"
+                                    class="text-xs font-bold px-2 py-0.5 rounded bg-surfaceHighlight text-muted uppercase tracking-wider">Topic</span>
+                            </div>
+                            <h1 id="prob-title" class="text-2xl font-bold text-primary">Title</h1>
+                        </div>
+                        <button onclick="window.print()"
+                            class="flex items-center gap-2 px-3 py-1.5 rounded bg-surface border border-surfaceHighlight text-xs font-bold text-muted hover:text-text hover:border-accent transition-all"
+                            title="Tải PDF / In">
+                            <i data-lucide="printer" class="w-4 h-4"></i>
+                            <span class="hidden sm:inline">Tải PDF / In</span>
+                        </button>
+                    </div>
+
+                    <!-- Print Title -->
+                    <div class="hidden print:block mb-6 border-b border-gray-300 pb-4">
+                        <h1 id="print-title" class="text-3xl font-bold text-black mb-2">Title</h1>
+                        <div class="flex gap-4 text-sm text-gray-600 font-bold uppercase">
+                            <span id="print-diff">DIFFICULTY</span>
+                            <span>|</span>
+                            <span id="print-topic">TOPIC</span>
+                        </div>
+                    </div>
+
+                    <!-- Markdown Content -->
+                    <div id="prob-markdown"
+                        class="flex-1 overflow-y-auto pr-2 custom-scrollbar problem-content text-sm leading-relaxed text-gray-300 print:text-black">
+                        <!-- Rendered Markdown goes here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Editor Panel -->
+            <section class="flex-1 h-1/2 md:h-full md:w-1/2 p-6 bg-[#0c0c0e] editor-section print-hidden">
+                <div class="h-full flex flex-col gap-4">
+                    <!-- Code Area -->
+                    <div
+                        class="flex-1 flex flex-col bg-surface rounded-lg border border-surfaceHighlight overflow-hidden">
+                        <div
+                            class="flex items-center justify-between px-4 py-2 bg-surfaceHighlight/50 border-b border-surfaceHighlight">
+                            <span id="editor-lang-label" class="text-xs font-mono text-muted">C++ Source File</span>
+                            <span class="text-xs text-muted">Paste your solution here</span>
+                        </div>
+                        <textarea id="code-editor"
+                            class="flex-1 w-full bg-[#0d0d10] text-gray-300 font-mono text-sm p-4 resize-none focus:outline-none leading-relaxed"
+                            spellcheck="false" placeholder="// Viết code giải của bạn ở đây..."></textarea>
+                    </div>
+
+                    <!-- Action Bar -->
+                    <div class="flex gap-3">
+                        <button id="btn-submit" disabled
+                            class="flex-[2] flex items-center justify-center gap-2 py-3 rounded font-bold text-sm uppercase tracking-wide transition-all bg-surfaceHighlight text-muted cursor-not-allowed">
+                            <i data-lucide="send" class="w-4 h-4"></i> <span>Nộp bài & Chấm</span>
+                        </button>
+
+                        <button id="btn-hint" disabled
+                            class="flex-1 px-4 rounded bg-surface border border-surfaceHighlight text-muted hover:text-text hover:border-muted transition-colors flex items-center justify-center gap-2 hidden"
+                            title="Xin gợi ý">
+                            <i data-lucide="lightbulb" class="w-4 h-4"></i> <span
+                                class="hidden sm:inline text-xs font-bold">Gợi ý</span>
+                        </button>
+
+                        <button id="btn-solution" disabled
+                            class="flex-1 px-4 rounded bg-surface border border-surfaceHighlight text-muted hover:text-text hover:border-accent transition-colors flex items-center justify-center gap-2 hidden"
+                            title="Xem lời giải">
+                            <i data-lucide="book-open" class="w-4 h-4"></i> <span
+                                class="hidden sm:inline text-xs font-bold">Lời giải mẫu</span>
+                        </button>
+                    </div>
+
+                    <!-- Feedback Area -->
+                    <div id="feedback-area"
+                        class="hidden rounded-lg border overflow-hidden animate-in slide-in-from-bottom-4 fade-in duration-300 shadow-xl flex flex-col max-h-[400px]">
+                        <div id="feedback-header" class="px-4 py-3 border-b flex items-center justify-between shrink-0">
+                            <div class="flex items-center gap-2">
+                                <span id="feedback-label"
+                                    class="text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+                                    <!-- Icon + Label -->
+                                </span>
+                            </div>
+                            <span class="text-xs text-muted/60 font-mono">AI Judge Verdict</span>
+                        </div>
+                        <div class="p-5 overflow-y-auto custom-scrollbar bg-[#121214]">
+                            <div id="feedback-content" class="prose prose-invert max-w-none text-sm text-gray-300">
+                                <!-- Markdown -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Solution Modal -->
+    <div id="solution-modal"
+        class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div
+            class="bg-surface border border-surfaceHighlight rounded-lg w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl">
+            <div class="flex items-center justify-between p-4 border-b border-surfaceHighlight bg-surfaceHighlight/20">
+                <h2 class="text-xl font-bold text-primary flex items-center gap-2">
+                    <i data-lucide="book-open" class="w-5 h-5"></i>
+                    Lời giải & Code mẫu
+                </h2>
+                <div class="flex items-center gap-2">
+                    <button onclick="window.print()"
+                        class="flex items-center gap-2 px-3 py-1.5 rounded bg-surface border border-surfaceHighlight text-xs font-bold text-muted hover:text-text hover:border-accent transition-all print-hidden">
+                        <i data-lucide="printer" class="w-4 h-4"></i>
+                        <span>Tải PDF / In</span>
+                    </button>
+                    <button id="btn-close-modal"
+                        class="p-1.5 rounded hover:bg-surfaceHighlight text-muted hover:text-text transition-colors print-hidden">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="solution-content" class="flex-1 overflow-y-auto p-6 custom-scrollbar">
+                <!-- Content populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Widget -->
+    <button id="chat-toggle"
+        class="fixed bottom-6 right-6 w-14 h-14 bg-primary text-black rounded-full shadow-lg shadow-primary/20 hover:scale-110 transition-transform z-50 flex items-center justify-center print:hidden group">
+        <i data-lucide="message-circle" class="w-7 h-7"></i>
+        <span
+            class="absolute right-full mr-3 bg-surface border border-surfaceHighlight px-2 py-1 rounded text-xs text-text opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            Hỏi trợ lý AI
+        </span>
+    </button>
+
+    <div id="chat-window"
+        class="fixed bottom-6 right-6 w-[400px] h-[600px] max-w-[calc(100vw-48px)] max-h-[calc(100vh-100px)] bg-surface border border-surfaceHighlight rounded-xl shadow-2xl flex flex-col z-50 print:hidden animate-in slide-in-from-bottom-5 fade-in duration-200 hidden">
+        <div
+            class="flex items-center justify-between p-4 border-b border-surfaceHighlight bg-surfaceHighlight/30 rounded-t-xl">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+                    <i data-lucide="bot" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-sm text-text">Trợ lý Học tập</h3>
+                    <p class="text-[10px] text-muted">Hỏi đáp về thuật toán & Code</p>
+                </div>
+            </div>
+            <button id="chat-close"
+                class="p-1.5 rounded hover:bg-surfaceHighlight text-muted hover:text-text transition-colors">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <div id="chat-messages" class="flex-1 overflow-y-auto p-4 custom-scrollbar space-y-4 bg-[#0c0c0e]">
+            <!-- Messages -->
+            <div class="text-center text-muted text-sm mt-10 px-6">
+                <i data-lucide="bot" class="w-12 h-12 mx-auto mb-3 opacity-20"></i>
+                <p>Xin chào! Tôi có thể giúp gì cho bạn về bài tập này hoặc các kiến thức lập trình?</p>
+            </div>
+        </div>
+        <form id="chat-form" class="p-3 border-t border-surfaceHighlight bg-surface">
+            <div class="flex gap-2">
+                <input id="chat-input" type="text" placeholder="Nhập câu hỏi của bạn..."
+                    class="flex-1 bg-surfaceHighlight/50 border border-surfaceHighlight rounded-md px-3 py-2 text-sm text-text focus:outline-none focus:border-muted placeholder-muted/50">
+                <button type="submit" id="chat-send" disabled
+                    class="p-2 rounded-md transition-colors flex items-center justify-center bg-surfaceHighlight text-muted cursor-not-allowed">
+                    <i data-lucide="send" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Application Logic -->
+    <script type="module" src="/js/app.js"></script>
+</body>
+
+</html>

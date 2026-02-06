@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #09090b;
+    color: #e4e4e7;
+}
+
+code,
+pre,
+textarea,
+.font-mono {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #18181b;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #3f3f46;
+    border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #52525b;
+}
+
+/* KaTeX Adjustments */
+.katex {
+    font-size: 1.1em;
+    color: #e4e4e7;
+}
+
+.katex-display {
+    margin: 0.5em 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromBottom {
+    from {
+        opacity: 0;
+        transform: translateY(1rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-in.fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+.animate-in.slide-in-from-bottom-4 {
+    animation: slideInFromBottom 0.3s ease-out forwards;
+}
+
+.animate-in.slide-in-from-bottom-5 {
+    animation: slideInFromBottom 0.2s ease-out forwards;
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background-color: white;
+        color: black;
+    }
+
+    /* Hide everything by default */
+    header,
+    aside,
+    .editor-section,
+    .print-hidden {
+        display: none !important;
+    }
+
+    /* SCENARIO 1: Printing the Problem Panel */
+    /* If modal is hidden, we print problem panel */
+    body:not(.has-modal-open) #problem-panel {
+        display: block !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+        border: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    body:not(.has-modal-open) main {
+        display: block;
+        margin: 0;
+        padding: 0;
+        overflow: visible;
+    }
+
+    /* SCENARIO 2: Printing the Solution Modal */
+    body.has-modal-open main {
+        display: none !important;
+    }
+
+    #solution-modal {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        background: white !important;
+        z-index: 9999 !important;
+        display: block !important;
+        overflow: visible !important;
+        padding: 0 !important;
+    }
+
+    #solution-modal .bg-surface {
+        box-shadow: none !important;
+        border: none !important;
+    }
+}
