@@ -94,12 +94,12 @@
     </header>
 
     <!-- Chat Messages Area -->
-    <main class="flex-1 overflow-y-auto custom-scrollbar" id="chat-messages">
+    <main class="flex-1 overflow-y-auto custom-scrollbar animate-fadeInScale" id="chat-messages">
         <div class="chat-container p-6 space-y-6">
             <!-- Welcome Message -->
             <div class="text-center py-16">
                 <div
-                    class="w-20 h-20 rounded-2xl bg-gradient-to-br from-neon/20 to-purple-600/20 flex items-center justify-center mx-auto mb-6">
+                    class="w-20 h-20 rounded-2xl bg-gradient-to-br from-neon/20 to-purple-600/20 flex items-center justify-center mx-auto mb-6 animate-pulseGlow">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                         class="text-neon">
@@ -111,8 +111,8 @@
                         <path d="M9 13v2" />
                     </svg>
                 </div>
-                <h2 class="text-2xl font-bold text-text mb-2">Xin chào! 👋</h2>
-                <p class="text-muted max-w-md mx-auto">
+                <h2 class="text-2xl font-bold text-text mb-2 animate-slideInTop delay-100">Xin chào! 👋</h2>
+                <p class="text-muted max-w-md mx-auto animate-slideInTop delay-200">
                     Tôi là trợ lý AI của CP Coach. Tôi có thể giúp bạn giải đáp thắc mắc về thuật toán, cấu trúc dữ
                     liệu, và các bài tập lập trình.
                 </p>
@@ -120,19 +120,19 @@
                 <!-- Quick Actions -->
                 <div class="flex flex-wrap justify-center gap-3 mt-8">
                     <button
-                        class="quick-prompt px-4 py-2 rounded-xl bg-surface border border-surfaceHighlight hover:border-neon/50 text-sm text-text transition-all hover:bg-neon/10">
+                        class="quick-prompt px-4 py-2 rounded-xl bg-surface border border-surfaceHighlight hover:border-neon/50 text-sm text-text transition-all hover:bg-neon/10 hover-scale animate-fadeInScale delay-300">
                         💡 Giải thích thuật toán QHĐ
                     </button>
                     <button
-                        class="quick-prompt px-4 py-2 rounded-xl bg-surface border border-surfaceHighlight hover:border-neon/50 text-sm text-text transition-all hover:bg-neon/10">
+                        class="quick-prompt px-4 py-2 rounded-xl bg-surface border border-surfaceHighlight hover:border-neon/50 text-sm text-text transition-all hover:bg-neon/10 hover-scale animate-fadeInScale delay-500">
                         📊 Độ phức tạp O(n log n)
                     </button>
                     <button
-                        class="quick-prompt px-4 py-2 rounded-xl bg-surface border border-surfaceHighlight hover:border-neon/50 text-sm text-text transition-all hover:bg-neon/10">
+                        class="quick-prompt px-4 py-2 rounded-xl bg-surface border border-surfaceHighlight hover:border-neon/50 text-sm text-text transition-all hover:bg-neon/10 hover-scale animate-fadeInScale delay-700">
                         🔍 BFS vs DFS
                     </button>
                     <button
-                        class="quick-prompt px-4 py-2 rounded-xl bg-surface border border-surfaceHighlight hover:border-neon/50 text-sm text-text transition-all hover:bg-neon/10">
+                        class="quick-prompt px-4 py-2 rounded-xl bg-surface border border-surfaceHighlight hover:border-neon/50 text-sm text-text transition-all hover:bg-neon/10 hover-scale animate-fadeInScale delay-1000">
                         🌲 Segment Tree là gì?
                     </button>
                 </div>

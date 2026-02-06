@@ -44,7 +44,7 @@
 
     <!-- Header -->
     <header
-        class="h-14 border-b border-surfaceHighlight flex items-center px-6 bg-surface/50 backdrop-blur-sm z-10 shrink-0 print-hidden">
+        class="h-14 border-b border-surfaceHighlight flex items-center px-6 bg-surface/50 backdrop-blur-sm z-10 shrink-0 print-hidden animate-slideInTop">
         <div class="flex items-center gap-3 text-primary">
             <div class="bg-primary text-black p-1.5 rounded-lg">
                 <i data-lucide="cpu" class="w-5 h-5" stroke-width="2.5"></i>
@@ -117,7 +117,7 @@
 
         <!-- Sidebar (Control Panel) -->
         <aside
-            class="w-64 bg-background border-r border-surfaceHighlight p-4 hidden md:flex flex-col shrink-0 print-hidden"
+            class="w-64 bg-background border-r border-surfaceHighlight p-4 hidden md:flex flex-col shrink-0 print-hidden animate-slideInLeft delay-200"
             id="control-panel">
             <div class="w-full h-full flex flex-col gap-6 p-1">
                 <!-- Mode Selector (Dropdown Popup) -->
@@ -258,7 +258,7 @@
 
                 <!-- Generate Button -->
                 <button id="btn-generate"
-                    class="mt-auto w-full py-3 rounded font-bold text-sm tracking-wide uppercase transition-all bg-primary text-black hover:bg-white disabled:bg-surfaceHighlight disabled:text-muted disabled:cursor-not-allowed">
+                    class="mt-auto w-full py-3 rounded font-bold text-sm tracking-wide uppercase transition-all bg-primary text-black hover:bg-white disabled:bg-surfaceHighlight disabled:text-muted disabled:cursor-not-allowed hover-scale animate-pulseGlow">
                     Sinh đề bài mới
                 </button>
             </div>
@@ -275,7 +275,7 @@
 
             <!-- Problem Panel -->
             <section
-                class="flex-1 h-1/2 md:h-full md:w-1/2 p-6 border-b md:border-b-0 md:border-r border-surfaceHighlight overflow-hidden relative problem-section"
+                class="flex-1 h-1/2 md:h-full md:w-1/2 p-6 border-b md:border-b-0 md:border-r border-surfaceHighlight overflow-hidden relative problem-section animate-fadeInScale delay-300"
                 id="problem-panel">
 
                 <div id="problem-loading"
@@ -339,7 +339,8 @@
             </div>
 
             <!-- Editor Panel -->
-            <section class="flex-1 h-1/2 md:h-full md:w-1/2 p-6 bg-[#0c0c0e] editor-section print-hidden"
+            <section
+                class="flex-1 h-1/2 md:h-full md:w-1/2 p-6 bg-[#0c0c0e] editor-section print-hidden animate-fadeInScale delay-500"
                 id="editor-panel">
                 <div class="h-full flex flex-col gap-4">
                     <!-- Code Area -->
