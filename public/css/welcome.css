@@ -30,13 +30,13 @@ body {
 .container {
     position: relative;
     z-index: 10;
-    max-width: 900px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 60px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 40px;
+    gap: 48px;
 }
 
 /* Hero Section */
@@ -84,6 +84,195 @@ body {
     pointer-events: none;
 }
 
+/* Features Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    width: 100%;
+    animation: floatIn 1s ease-out 0.4s backwards;
+}
+
+.feature-card {
+    text-align: center;
+    padding: 32px 24px !important;
+}
+
+.feature-icon {
+    color: #8b5cf6;
+    margin-bottom: 16px;
+    display: inline-block;
+}
+
+.feature-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fafafa;
+    margin-bottom: 12px;
+}
+
+.feature-card p {
+    color: #a1a1aa;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* Effectiveness Card */
+.effectiveness-card {
+    width: 100%;
+    padding: 40px 32px !important;
+    animation: floatIn 1s ease-out 0.6s backwards;
+}
+
+.effectiveness-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.stat-label {
+    color: #d4d4d8;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Guide Card */
+.guide-card {
+    width: 100%;
+    max-width: 700px;
+    padding: 32px !important;
+    animation: floatIn 1s ease-out 0.8s backwards;
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fafafa;
+    margin-bottom: 24px;
+}
+
+.title-icon {
+    color: #8b5cf6;
+}
+
+.guide-steps {
+    display: grid;
+    gap: 16px;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.step:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateX(8px);
+}
+
+.step-number {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.step-text {
+    color: #d4d4d8;
+    font-size: 1rem;
+}
+
+/* Testimonials */
+.testimonials-section {
+    width: 100%;
+    animation: floatIn 1s ease-out 1s backwards;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #fafafa;
+    margin-bottom: 32px;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.testimonial-card {
+    padding: 28px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.stars {
+    color: #facc15;
+    font-size: 1.25rem;
+    letter-spacing: 2px;
+}
+
+.testimonial-text {
+    color: #d4d4d8;
+    line-height: 1.7;
+    font-size: 0.95rem;
+    font-style: italic;
+    flex-grow: 1;
+}
+
+.testimonial-author {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.testimonial-author strong {
+    color: #fafafa;
+    font-weight: 600;
+}
+
+.testimonial-author span {
+    color: #a1a1aa;
+    font-size: 0.85rem;
+}
+
 /* Glass Cards */
 .glass-card {
     background: rgba(255, 255, 255, 0.03);
@@ -91,19 +280,8 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 24px;
     padding: 32px;
-    width: 100%;
-    max-width: 600px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    animation: floatIn 1s ease-out backwards;
     transform-style: preserve-3d;
-}
-
-.author-card {
-    animation-delay: 0.4s;
-}
-
-.license-card {
-    animation-delay: 0.6s;
 }
 
 .glass-card:hover {
@@ -111,65 +289,6 @@ body {
     border-color: rgba(255, 255, 255, 0.2);
     transform: translateY(-4px);
     box-shadow: 0 20px 60px rgba(139, 92, 246, 0.2);
-}
-
-.card-content {
-    display: flex;
-    gap: 24px;
-    align-items: flex-start;
-}
-
-/* Author Card */
-.author-icon,
-.license-icon {
-    color: #8b5cf6;
-    flex-shrink: 0;
-}
-
-.author-info h3,
-.license-info p {
-    color: #d4d4d8;
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 8px;
-    font-weight: 600;
-}
-
-.author-name {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #fafafa;
-    margin-bottom: 8px;
-}
-
-.author-school {
-    color: #a1a1aa;
-    font-size: 0.95rem;
-    line-height: 1.6;
-}
-
-/* License Card */
-.copyright {
-    color: #d4d4d8;
-    line-height: 1.7;
-    margin-bottom: 12px;
-    font-size: 0.95rem;
-}
-
-.copyright strong {
-    color: #fafafa;
-    font-weight: 700;
-}
-
-.license-type {
-    color: #a1a1aa;
-    font-size: 0.875rem;
-}
-
-.license-type span {
-    color: #8b5cf6;
-    font-weight: 600;
 }
 
 /* CTA Button */
@@ -187,7 +306,7 @@ body {
     align-items: center;
     gap: 12px;
     transition: all 0.3s ease;
-    animation: floatIn 1s ease-out 0.8s backwards;
+    animation: floatIn 1s ease-out 1.2s backwards;
     overflow: hidden;
 }
 
@@ -231,7 +350,7 @@ body {
     color: #71717a;
     font-size: 0.875rem;
     line-height: 1.8;
-    animation: floatIn 1s ease-out 1s backwards;
+    animation: floatIn 1s ease-out 1.4s backwards;
     margin-top: 20px;
 }
 
@@ -240,7 +359,7 @@ body {
     font-weight: 600;
 }
 
-.footer-year {
+.footer-license {
     margin-top: 8px;
     font-size: 0.75rem;
     opacity: 0.6;
@@ -303,21 +422,24 @@ body {
 @media (max-width: 768px) {
     .container {
         padding: 40px 16px;
-        gap: 32px;
+        gap: 36px;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .effectiveness-content {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .testimonials-grid {
+        grid-template-columns: 1fr;
     }
 
     .glass-card {
         padding: 24px;
-    }
-
-    .card-content {
-        flex-direction: column;
-        gap: 16px;
-    }
-
-    .author-icon,
-    .license-icon {
-        align-self: center;
     }
 
     .cta-button {

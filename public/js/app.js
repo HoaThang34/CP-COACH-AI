@@ -1,12 +1,21 @@
+// Copyright (c) 2026 Hoa Quang Thang - Chuyên Nguyễn Tất Thành, Lào Cai
 
 import { state, Difficulty } from './state.js';
 import { API } from './api.js';
 import { UI } from './ui.js';
+import { AuthManager } from './auth.js';
+
+let authManager;
+let currentHistoryId = null; // Track current problem's history ID
 
 function init() {
+    authManager = new AuthManager();
     UI.initIcons();
     setupEventListeners();
     updateUI();
+
+    // Listen for auth changes to reload history
+    window.addEventListener('auth-changed', loadHistoryFromDB);
 }
 
 function updateUI() {
@@ -75,6 +84,23 @@ function setupEventListeners() {
             // Update UI
             updateUI(); // Refreshes history list and problem view
 
+            // Auto-save to database if logged in
+            if (state.currentUser) {
+                try {
+                    const saveResult = await API.saveHistory(
+                        data,
+                        '',
+                        '',
+                        state.config.language
+                    );
+                    if (saveResult.success) {
+                        currentHistoryId = saveResult.id;
+                    }
+                } catch (err) {
+                    console.error('Failed to save history:', err);
+                }
+            }
+
         } catch (err) {
             console.error(err);
             alert("Lỗi khi sinh đề. Vui lòng thử lại.");
@@ -110,6 +136,19 @@ function setupEventListeners() {
             const result = await API.analyzeSolution(state.problem, state.userCode, state.config.language);
             state.analysis = result;
             UI.renderFeedback(state.analysis);
+
+            // Auto-update history in database if logged in
+            if (state.currentUser && currentHistoryId) {
+                try {
+                    await API.updateHistory(
+                        currentHistoryId,
+                        state.userCode,
+                        result.verdict || 'UNKNOWN'
+                    );
+                } catch (err) {
+                    console.error('Failed to update history:', err);
+                }
+            }
         } catch (err) {
             console.error(err);
             alert("Lỗi khi chấm bài.");
@@ -223,6 +262,31 @@ function loadHistoryItem(item) {
     UI.renderProblem(state.problem);
     UI.renderFeedback(null);
     UI.toggleButtons(true);
+}
+
+// Load history from database
+async function loadHistoryFromDB() {
+    if (!state.currentUser) {
+        state.history = [];
+        UI.renderHistory(state.history, loadHistoryItem);
+        return;
+    }
+
+    try {
+        const result = await API.loadHistory();
+        if (result.success) {
+            state.history = result.history.map(item => ({
+                id: item.id.toString(),
+                problem: item.problem,
+                timestamp: new Date(item.timestamp).getTime(),
+                userCode: item.userCode,
+                verdict: item.verdict
+            }));
+            UI.renderHistory(state.history, loadHistoryItem);
+        }
+    } catch (err) {
+        console.error('Failed to load history:', err);
+    }
 }
 
 // Start

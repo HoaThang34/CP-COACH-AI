@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Hoa Quang Thang - Chuyên Nguyễn Tất Thành, Lào Cai
 
 const API_BASE = '/api';
 
@@ -44,6 +45,70 @@ export const API = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ history, newMessage, currentContext })
+        });
+        return await response.json();
+    },
+
+    // Authentication
+    async register(username, password) {
+        const response = await fetch(`${API_BASE}/register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ username, password })
+        });
+        return await response.json();
+    },
+
+    async login(username, password) {
+        const response = await fetch(`${API_BASE}/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ username, password })
+        });
+        return await response.json();
+    },
+
+    async logout() {
+        const response = await fetch(`${API_BASE}/logout`, {
+            method: 'POST',
+            credentials: 'include'
+        });
+        return await response.json();
+    },
+
+    async checkAuth() {
+        const response = await fetch(`${API_BASE}/me`, {
+            credentials: 'include'
+        });
+        return await response.json();
+    },
+
+    // History
+    async loadHistory() {
+        const response = await fetch(`${API_BASE}/history`, {
+            credentials: 'include'
+        });
+        return await response.json();
+    },
+
+    async saveHistory(problem, userCode = '', verdict = '', language = 'C++') {
+        const response = await fetch(`${API_BASE}/history`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ problem, userCode, verdict, language })
+        });
+        return await response.json();
+    },
+
+    async updateHistory(historyId, userCode, verdict) {
+        const response = await fetch(`${API_BASE}/history/${historyId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ userCode, verdict })
         });
         return await response.json();
     }

@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Hoa Quang Thang - Chuyên Nguyễn Tất Thành, Lào Cai
 
 export const Difficulty = {
     EASY: "Dễ",
@@ -19,6 +20,9 @@ export const state = {
     userCode: '',
     analysis: null,
     history: [], // Array of { id, problem, timestamp }
+
+    // Authentication
+    currentUser: null, // { user_id, username } or null
 
     // Chat
     chatMessages: [],
