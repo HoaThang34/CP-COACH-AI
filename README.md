@@ -7,51 +7,37 @@
 <a name="english"></a>
 ## 🇬🇧 English
 
-**CP Coach AI** is an advanced, AI-powered training platform designed for competitive programmers. Unlike traditional judges that rely on hidden test cases, CP Coach AI uses Google's Gemini models to generate unique problems, analyze algorithmic logic statically, and provide intelligent feedback, hints, and model solutions.
+**CP Coach AI** is a next-generation training platform for competitive programmers, powered by Google's **Gemini** models. It goes beyond traditional Online Judges (OJ) by providing **instant, test-case-free evaluation** through static analysis, along with intelligent feedback and personalized learning paths.
 
 It is designed to help students prepare for competitions like **HSG (National Student Olympiad)**, **ICPC**, and **Codeforces** by focusing on algorithmic thinking, complexity analysis, and code quality.
+
+### 🌟 What's New
+- **Premium UI & Animations**: Smooth entrance animations, glassmorphism design, and interactive elements for an immersive experience.
+- **User Authentication**: Secure login/registration system to track your progress and saved problems.
+- **Real-time Chat Assistant**: A context-aware AI tutor that helps you unblock without giving away the answer.
 
 ### 🚀 Key Features
 
 - **Dynamic Problem Generation**:
-  - Instantly generate problems based on specific topics (e.g., DP, Graphs, Greedy) and difficulty levels.
-  - **Custom Mode**: Describe a scenario or specific algorithm requirements to generate a tailored problem.
+  - Instantly generate unique problems based on topics (e.g., DP, Graphs, Greedy) and difficulty levels.
+  - **Custom Mode**: Describe a scenario to generate a tailored problem.
 - **AI "Static Analysis" Judge**:
   - Evaluates code logic without running test cases.
   - Detects logic errors, edge cases, and incorrect complexity ($O(N)$ vs $O(N^2)$).
 - **Smart Assistance**:
-  - **Hints**: Request nudges in the right direction without revealing the full answer.
-  - **Model Solutions**: Generate complete reference solutions with detailed explanations and complexity proofs.
-  - **Context-Aware Chatbot**: A floating tutor that knows the current problem context and can answer specific questions.
+  - **Hints**: Request nudges in the right direction.
+  - **Model Solutions**: Generate complete reference solutions with detailed complexity proofs.
 - **Developer Experience**:
-  - **1-Click Startup**: Use `run_app.bat` for instant setup and execution.
-  - **LaTeX Support**: Renders mathematical formulas beautifully using KaTeX.
+  - **1-Click Startup**: Use `run_app.bat` for instant setup.
+  - **LaTeX Support**: Renders mathematical formulas beautifully.
   - **Print Friendly**: Optimized CSS for printing problems.
 
 ### 🛠️ Tech Stack
 
-- **Frontend**: Vanilla HTML, CSS (Tailwind), JavaScript
+- **Frontend**: HTML5, CSS3 (Tailwind + Custom Animations), JavaScript (Modules)
 - **Backend**: Python (Flask)
+- **Database**: SQLite (User Data & History)
 - **AI Integration**: Google GenAI SDK (`google-generativeai`)
-- **Deployment**: Optimized for Vercel (Python Runtime)
-
-### 📂 Project Structure
-
-```text
-.
-├── api/                 # Python Backend (Flask)
-│   ├── services/        # AI Service Logic
-│   ├── prompts.py       # Prompt Templates
-│   └── index.py         # App Entry Point
-├── public/              # Static Frontend
-│   ├── css/             # Styles
-│   ├── js/              # Application Logic
-│   └── index.html       # Main HTML File
-├── requirements.txt     # Python Dependencies
-├── run_app.bat          # 1-Click Startup for Windows
-├── vercel.json          # Deployment Config
-└── README.md
-```
 
 ### ⚡ Installation & Setup
 
@@ -59,102 +45,96 @@ It is designed to help students prepare for competitions like **HSG (National St
     - Python 3.9+
     - A valid API Key from [Google AI Studio](https://aistudio.google.com/).
 
-2.  **Windows (Recommend)**:
-    - Just double-click **`run_app.bat`**. It will install dependencies and start the app.
+2.  **Clone the Repository**:
+    ```bash
+    git clone https://github.com/HoaThang34/CP-COACH-AI.git
+    cd CP-COACH-AI
+    ```
 
-3.  **Manual Start**:
+3.  **Run (Windows)**:
+    - Double-click **`run_app.bat`**. It will automatically install dependencies and start the app.
+
+4.  **Manual Start**:
     ```bash
     pip install -r requirements.txt
     python -m api.index
     ```
 
-4.  **Configure API Key**:
-    Set the `GEMINI_API_KEY` environment variable or create a `.env` file.
-
-### 📖 Usage Guide
-
-1.  **Select a Topic**: Choose from standard topics or use "Custom Mode".
-2.  **Set Difficulty**: Choose from Easy up to National Student Olympiad level.
-3.  **Generate**: Click "Sinh đề bài mới" (Generate New Problem).
-4.  **Solve**: Write your code in the editor panel.
-5.  **Submit**: Click "Nộp bài & Chấm" (Submit & Judge).
+5.  **Configure API Key**:
+    Set the `GEMINI_API_KEY` environment variable or create a `.env` file in the root directory:
+    ```env
+    GEMINI_API_KEY=your_api_key_here
+    SECRET_KEY=your_secret_key_here
+    ```
 
 ---
 
 <a name="tiếng-việt"></a>
 ## 🇻🇳 Tiếng Việt
 
-**CP Coach AI** là một nền tảng luyện tập lập trình thi đấu tiên tiến được hỗ trợ bởi trí tuệ nhân tạo (AI). Khác với các hệ thống chấm bài truyền thống (OJ) dựa trên các bộ test case ẩn, CP Coach AI sử dụng các mô hình Google Gemini để tạo ra các đề bài độc đáo, phân tích tư duy thuật toán tĩnh và cung cấp phản hồi thông minh, gợi ý cũng như lời giải mẫu.
+**CP Coach AI** là nền tảng luyện tập lập trình thi đấu thế hệ mới, được hỗ trợ bởi trí tuệ nhân tạo **Google Gemini**. Hệ thống vượt trội hơn các OJ truyền thống nhờ khả năng **chấm bài tức thì không cần test case** thông qua phân tích tĩnh, đồng thời cung cấp phản hồi thông minh và lộ trình học cá nhân hóa.
+
+Công cụ đắc lực cho học sinh ôn thi **HSG Quốc gia**, **ICPC**, và **Codeforces**, tập trung rèn luyện tư duy thuật toán và tối ưu độ phức tạp.
+
+### 🌟 Điểm Mới
+- **Giao diện Premium**: Hiệu ứng chuyển động mượt mà (Animations), thiết kế Glassmorphism và tương tác sống động.
+- **Hệ thống Tài khoản**: Đăng ký/Đăng nhập bảo mật để lưu trữ lịch sử làm bài.
+- **Trợ lý Chat AI Real-time**: Gia sư ảo thông minh, giúp giải đáp thắc mắc theo ngữ cảnh bài toán.
 
 ### 🚀 Tính Năng Chính
 
 - **Tạo Đề Bài Động**:
-  - Tạo đề bài tức thì dựa trên các chủ đề (Quy hoạch động, Đồ thị, Tham lam...) và độ khó mong muốn.
-  - **Chế độ Tùy chỉnh**: Nhập yêu cầu cụ thể để AI sinh đề theo ý muốn.
+  - Sinh đề bài mới tức thì theo chủ đề (Quy hoạch động, Đồ thị...) và độ khó.
+  - **Chế độ Tùy chọn**: Nhập ý tưởng để AI tạo đề bài riêng cho bạn.
 - **AI Chấm Bài (Phân Tích Tĩnh)**:
-  - Đánh giá logic của code mà không cần chạy test case.
-  - Phát hiện lỗi logic, các trường hợp biên và sai lệch về độ phức tạp.
+  - Đánh giá logic thuật toán mà không cần chạy test case.
+  - Phát hiện lỗi sai tư duy, trường hợp biên và độ phức tạp chưa tối ưu.
 - **Hỗ Trợ Thông Minh**:
-  - **Gợi ý (Hint)**: Gợi mở hướng đi mà không làm lộ lời giải hoàn chỉnh.
-  - **Lời Giải Mẫu**: Tạo lời giải tham khảo kèm giải thích chi tiết.
-  - **Chatbot Trợ Giảng**: Trợ lý ảo hiểu ngữ cảnh bài toán đang làm.
+  - **Gợi ý (Hint)**: Hướng dẫn giải quyết vấn đề từng bước.
+  - **Lời Giải Mẫu**: Cung cấp code mẫu chuẩn kèm chứng minh độ phức tạp.
 - **Trải Nghiệm Tiện Lợi**:
-  - **Khởi động 1-click**: Sử dụng `run_app.bat` để tự động hóa toàn bộ quy trình chạy app.
-  - **Hỗ trợ LaTeX**: Hiển thị công thức toán học đẹp mắt.
+  - **Khởi động 1-click**: File `run_app.bat` tự động cài đặt và chạy app.
+  - **Hỗ trợ Toán học**: Hiển thị công thức LaTeX đẹp mắt.
+  - **In ấn Tối ưu**: Giao diện in đề bài chuyên nghiệp.
 
 ### 🛠️ Công Nghệ Sử Dụng
 
-- **Frontend**: Vanilla HTML, CSS (Tailwind), JavaScript
+- **Frontend**: HTML5, CSS3 (Tailwind + Animations), JavaScript
 - **Backend**: Python (Flask)
-- **Tích hợp AI**: Google GenAI SDK (`google-generativeai`)
-- **Triển khai**: Tối ưu cho Vercel (Python Runtime)
+- **Cơ sở dữ liệu**: SQLite
+- **AI Core**: Google GenAI SDK
 
-### 📂 Cấu Trúc Dự Án
-
-```text
-.
-├── api/                 # Backend Python (Flask)
-│   ├── services/        # Logic xử lý AI
-│   ├── prompts.py       # Mẫu câu lệnh AI
-│   └── index.py         # Điểm khởi chạy API
-├── public/              # Frontend Tĩnh
-│   ├── css/             # Giao diện
-│   ├── js/              # Logic ứng dụng
-│   └── index.html       # Trang chính
-├── requirements.txt     # Danh sách thư viện Python
-├── run_app.bat          # File chạy nhanh trên Windows
-├── vercel.json          # Cấu hình deployment
-└── README.md
-```
-
-### ⚡ Cài Đặt & Thiết Lập
+### ⚡ Cài Đặt & Sử Dụng
 
 1.  **Yêu cầu**:
-    - Python 3.9+ 
+    - Python 3.9 trở lên
     - API Key từ [Google AI Studio](https://aistudio.google.com/).
 
-2.  **Cách nhanh nhất (Windows)**:
-    - Click đúp vào file **`run_app.bat`**. Chương trình sẽ tự cài thư viện và mở trình duyệt.
+2.  **Tải mã nguồn**:
+    ```bash
+    git clone https://github.com/HoaThang34/CP-COACH-AI.git
+    cd CP-COACH-AI
+    ```
 
-3.  **Cách thủ công**:
+3.  **Chạy nhanh (Windows)**:
+    - Click đúp vào file **`run_app.bat`**.
+
+4.  **Chạy thủ công**:
     ```bash
     pip install -r requirements.txt
     python -m api.index
     ```
 
-4.  **Cấu hình API Key**:
-    Thiết lập biến môi trường `GEMINI_API_KEY` hoặc tạo file `.env`.
-
-### 📖 Hướng Dẫn Sử Dụng
-
-1.  **Chọn Chủ Đề**: Chọn từ danh sách có sẵn hoặc dùng "Tự Chọn".
-2.  **Chọn Độ Khó**: Từ Dễ đến HSG Quốc gia.
-3.  **Tạo Đề**: Nhấn nút "Sinh đề bài mới".
-4.  **Làm Bài**: Viết code giải vào khung soạn thảo.
-5.  **Nộp Bài**: Nhấn "Nộp bài & Chấm" để AI đánh giá.
+5.  **Cấu hình**:
+    Tạo file `.env` tại thư mục gốc:
+    ```env
+    GEMINI_API_KEY=your_api_key_here
+    SECRET_KEY=your_secret_key_here
+    ```
 
 ---
 
 ## 📄 License
 
-This project is open-source and available for educational purposes.
+Project is open-source for educational purposes.
+Developed by **Hoa Quang Thang**.
