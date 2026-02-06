@@ -1,11 +1,11 @@
 // Copyright (c) 2026 Hoa Quang Thang - Chuyên Nguyễn Tất Thành, Lào Cai
 
 export const Difficulty = {
-    EASY: "Dễ",
-    MEDIUM: "Trung bình",
-    HARD: "Khó",
-    EXPERT: "Chuyên gia",
-    HSG_QG: "HSG Quốc gia"
+    EASY: "Cơ bản",
+    MEDIUM: "Kết hợp thuật toán cơ bản",
+    HARD: "Kết hợp thuật toán nâng cao",
+    EXPERT: "Mức độ HSG Cấp Tỉnh",
+    HSG_QG: "Mức độ HSG Quốc Gia"
 };
 
 export const state = {

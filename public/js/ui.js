@@ -3,21 +3,36 @@ import { renderMarkdown } from './markdown_renderer.js';
 import { Difficulty } from './state.js';
 import * as lucid from 'https://unpkg.com/lucide@latest';
 
+// Mode configurations
+const modeConfig = {
+    standard: { label: 'Chủ Đề', desc: 'Tạo đề theo chủ đề có sẵn', icon: 'list-filter', color: 'blue' },
+    custom: { label: 'Tự Chọn', desc: 'Tạo đề tùy chỉnh theo yêu cầu', icon: 'sparkles', color: 'purple' },
+    history: { label: 'Lịch Sử', desc: 'Xem lại các đề đã tạo', icon: 'history', color: 'orange' }
+};
+
 export const UI = {
     initIcons() {
         lucide.createIcons();
     },
 
     setMode(mode) {
-        // Tabs
+        const config = modeConfig[mode];
+
+        // Update popup button display
+        const modeLabel = document.getElementById('mode-label');
+        const modeIcon = document.getElementById('mode-icon');
+        if (modeLabel) modeLabel.textContent = config.label;
+
+        // Update checkmarks in popup menu
         document.querySelectorAll('.mode-btn').forEach(btn => {
             const btnMode = btn.dataset.mode;
-            if (btnMode === mode) {
-                btn.classList.add('bg-accent', 'text-white', 'shadow');
-                btn.classList.remove('text-muted', 'hover:text-text');
-            } else {
-                btn.classList.remove('bg-accent', 'text-white', 'shadow');
-                btn.classList.add('text-muted', 'hover:text-text');
+            const check = btn.querySelector('.mode-check');
+            if (check) {
+                if (btnMode === mode) {
+                    check.classList.remove('hidden');
+                } else {
+                    check.classList.add('hidden');
+                }
             }
         });
 
@@ -37,6 +52,12 @@ export const UI = {
         const genBtn = document.getElementById('btn-generate');
         if (mode === 'history') genBtn.classList.add('hidden');
         else genBtn.classList.remove('hidden');
+
+        // Close popup after selection
+        const popup = document.getElementById('mode-popup');
+        if (popup) popup.classList.add('hidden');
+
+        this.initIcons();
     },
 
     renderDifficultyOptions(selectedDiff, containerId, onSelect) {
@@ -47,8 +68,8 @@ export const UI = {
             const btn = document.createElement('button');
             const isSelected = diff === selectedDiff;
             btn.className = `text-left px-3 py-2 rounded text-xs transition-colors border ${isSelected
-                    ? 'bg-accent border-muted text-white'
-                    : 'bg-surface border-surfaceHighlight text-muted hover:border-accent'
+                ? 'bg-accent border-muted text-white'
+                : 'bg-surface border-surfaceHighlight text-muted hover:border-accent'
                 }`;
             btn.textContent = diff;
             btn.onclick = () => onSelect(diff);

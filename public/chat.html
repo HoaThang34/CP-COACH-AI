@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trợ lý Học tập AI - CP Coach AI</title>
+
+    <!-- Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked-katex-extension/lib/index.umd.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#09090b',
+                        surface: '#18181b',
+                        surfaceHighlight: '#27272a',
+                        text: '#e4e4e7',
+                        muted: '#a1a1aa',
+                        primary: '#fafafa',
+                        accent: '#3f3f46',
+                        neon: '#8b5cf6',
+                    },
+                    fontFamily: {
+                        mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", 'monospace'],
+                    }
+                },
+            },
+        };
+    </script>
+
+    <style>
+        .chat-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .message-user {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .message-ai {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+    </style>
+</head>
+
+<body class="bg-background text-text font-sans h-screen flex flex-col">
+
+    <!-- Header -->
+    <header
+        class="h-16 border-b border-surfaceHighlight flex items-center px-6 bg-surface/50 backdrop-blur-sm shrink-0">
+        <a href="/app" class="flex items-center gap-3 text-muted hover:text-text transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m12 19-7-7 7-7" />
+                <path d="M19 12H5" />
+            </svg>
+            <span class="text-sm">Quay lại</span>
+        </a>
+        <div class="flex items-center gap-3 mx-auto">
+            <div
+                class="w-10 h-10 rounded-xl bg-gradient-to-br from-neon to-purple-600 flex items-center justify-center text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 8V4H8" />
+                    <rect width="16" height="12" x="4" y="8" rx="2" />
+                    <path d="M2 14h2" />
+                    <path d="M20 14h2" />
+                    <path d="M15 13v2" />
+                    <path d="M9 13v2" />
+                </svg>
+            </div>
+            <div>
+                <h1 class="font-bold text-lg text-text">Trợ lý Học tập AI</h1>
+                <p class="text-xs text-muted">Hỏi đáp về thuật toán & Code</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2 text-xs text-muted">
+            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+            Online
+        </div>
+    </header>
+
+    <!-- Chat Messages Area -->
+    <main class="flex-1 overflow-y-auto custom-scrollbar" id="chat-messages">
+        <div class="chat-container p-6 space-y-6">
+            <!-- Welcome Message -->
+            <div class="text-center py-16">
+                <div
+                    class="w-20 h-20 rounded-2xl bg-gradient-to-br from-neon/20 to-purple-600/20 flex items-center justify-center mx-auto mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="text-neon">
+                        <path d="M12 8V4H8" />
+                        <rect width="16" height="12" x="4" y="8" rx="2" />
+                        <path d="M2 14h2" />
+                        <path d="M20 14h2" />
+                        <path d="M15 13v2" />
+                        <path d="M9 13v2" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-bold text-text mb-2">Xin chào! 👋</h2>
+                <p class="text-muted max-w-md mx-auto">
+                    Tôi là trợ lý AI của CP Coach. Tôi có thể giúp bạn giải đáp thắc mắc về thuật toán, cấu trúc dữ
+                    liệu, và các bài tập lập trình.
+                </p>
+
+                <!-- Quick Actions -->
+                <div class="flex flex-wrap justify-center gap-3 mt-8">
+                    <button
+                        class="quick-prompt px-4 py-2 rounded-xl bg-surface border border-surfaceHighlight hover:border-neon/50 text-sm text-text transition-all hover:bg-neon/10">
+                        💡 Giải thích thuật toán QHĐ
+                    </button>
+                    <button
+                        class="quick-prompt px-4 py-2 rounded-xl bg-surface border border-surfaceHighlight hover:border-neon/50 text-sm text-text transition-all hover:bg-neon/10">
+                        📊 Độ phức tạp O(n log n)
+                    </button>
+                    <button
+                        class="quick-prompt px-4 py-2 rounded-xl bg-surface border border-surfaceHighlight hover:border-neon/50 text-sm text-text transition-all hover:bg-neon/10">
+                        🔍 BFS vs DFS
+                    </button>
+                    <button
+                        class="quick-prompt px-4 py-2 rounded-xl bg-surface border border-surfaceHighlight hover:border-neon/50 text-sm text-text transition-all hover:bg-neon/10">
+                        🌲 Segment Tree là gì?
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Input Area -->
+    <footer class="border-t border-surfaceHighlight bg-surface/80 backdrop-blur-sm p-4 shrink-0">
+        <form id="chat-form" class="chat-container">
+            <div class="flex gap-3">
+                <input id="chat-input" type="text" placeholder="Nhập câu hỏi của bạn..."
+                    class="flex-1 bg-background border border-surfaceHighlight rounded-xl px-5 py-4 text-text focus:outline-none focus:border-neon/50 placeholder-muted/50 transition-all"
+                    autocomplete="off">
+                <button type="submit" id="chat-send" disabled
+                    class="px-6 py-4 rounded-xl font-bold text-sm transition-all flex items-center gap-2 bg-surfaceHighlight text-muted cursor-not-allowed">
+                    <span class="hidden sm:inline">Gửi</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m22 2-7 20-4-9-9-4Z" />
+                        <path d="M22 2 11 13" />
+                    </svg>
+                </button>
+            </div>
+            <p class="text-center text-xs text-muted mt-3">
+                Nhấn Enter để gửi • AI có thể mắc lỗi, hãy kiểm tra thông tin quan trọng
+            </p>
+        </form>
+    </footer>
+
+    <!-- Application Logic -->
+    <script type="module" src="/js/chat_page.js"></script>
+</body>
+
+</html>

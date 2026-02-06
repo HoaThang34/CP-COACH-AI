@@ -1,9 +1,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
+/* ============================================
+   ANTIGRAVITY DESIGN SYSTEM
+   Applied via CSS only - no HTML changes needed
+   ============================================ */
+
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #09090b;
+    /* Deep Space Background */
+    background: linear-gradient(135deg, #0a0a0f 0%, #0d0d14 50%, #09090b 100%);
+    background-attachment: fixed;
     color: #e4e4e7;
+    position: relative;
+}
+
+/* Subtle star particles effect */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        radial-gradient(1px 1px at 20px 30px, rgba(255, 255, 255, 0.12), transparent),
+        radial-gradient(1px 1px at 80px 60px, rgba(255, 255, 255, 0.08), transparent),
+        radial-gradient(1px 1px at 150px 100px, rgba(255, 255, 255, 0.1), transparent),
+        radial-gradient(1px 1px at 220px 150px, rgba(255, 255, 255, 0.06), transparent),
+        radial-gradient(1px 1px at 300px 80px, rgba(255, 255, 255, 0.1), transparent);
+    background-size: 350px 200px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
 }
 
 code,
@@ -13,26 +41,313 @@ textarea,
     font-family: 'JetBrains Mono', monospace;
 }
 
-/* Custom scrollbar */
+/* ============================================
+   RESIZABLE PANELS
+   ============================================ */
+
+.resize-divider {
+    width: 6px;
+    cursor: col-resize;
+    background: transparent;
+    position: relative;
+    z-index: 10;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.resize-divider:hover {
+    background: rgba(139, 92, 246, 0.1);
+}
+
+.resize-divider:active {
+    background: rgba(139, 92, 246, 0.2);
+}
+
+.resize-handle {
+    width: 4px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.resize-divider:hover .resize-handle {
+    background: rgba(139, 92, 246, 0.5);
+    height: 60px;
+}
+
+.resize-divider:active .resize-handle {
+    background: #8b5cf6;
+    height: 80px;
+}
+
+/* Prevent text selection during resize */
+body.resizing {
+    user-select: none !important;
+    cursor: col-resize !important;
+}
+
+body.resizing * {
+    cursor: col-resize !important;
+}
+
+/* ============================================
+   GLASSMORPHISM - Applied to existing elements
+   ============================================ */
+
+/* Header Glass Effect */
+header {
+    background: rgba(24, 24, 27, 0.7) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Sidebar Glass Effect */
+#control-panel {
+    background: rgba(24, 24, 27, 0.6) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Main content panels */
+#problem-panel {
+    background: rgba(18, 18, 20, 0.5) !important;
+}
+
+.editor-section {
+    background: rgba(12, 12, 14, 0.8) !important;
+}
+
+/* Floating Card Styling */
+main {
+    padding: 16px !important;
+    gap: 16px !important;
+    position: relative;
+    z-index: 1;
+}
+
+#problem-panel,
+.editor-section {
+    border-radius: 16px !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================
+   ENHANCED FORM ELEMENTS
+   ============================================ */
+
+/* Select dropdowns */
+select {
+    background: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 10px !important;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+select:focus {
+    border-color: rgba(139, 92, 246, 0.5) !important;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.1);
+}
+
+/* Select dropdown options styling */
+select option {
+    background: #18181b;
+    color: #e4e4e7;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.2s ease;
+}
+
+select option:hover,
+select option:focus {
+    background: linear-gradient(90deg, rgba(139, 92, 246, 0.3) 0%, rgba(139, 92, 246, 0.1) 100%) !important;
+    color: #ffffff;
+}
+
+select option:checked {
+    background: linear-gradient(90deg, #8b5cf6 0%, #7c3aed 100%);
+    color: white;
+    font-weight: 600;
+}
+
+select option:disabled {
+    color: #71717a;
+    font-style: italic;
+}
+
+/* Textareas */
+textarea {
+    background: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 10px !important;
+    transition: all 0.3s ease;
+}
+
+textarea:focus {
+    border-color: rgba(139, 92, 246, 0.5) !important;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.1);
+}
+
+/* ============================================
+   ENHANCED BUTTONS
+   ============================================ */
+
+/* Primary Action Button (Generate) */
+#btn-generate {
+    background: linear-gradient(135deg, #fafafa 0%, #e4e4e7 100%) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+#btn-generate:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255, 255, 255, 0.2);
+}
+
+#btn-generate:disabled {
+    background: rgba(63, 63, 70, 0.5) !important;
+    box-shadow: none;
+}
+
+/* Submit Button */
+#btn-submit {
+    border-radius: 12px !important;
+    transition: all 0.3s ease;
+}
+
+#btn-submit:not(:disabled) {
+    background: linear-gradient(135deg, #fafafa 0%, #e4e4e7 100%) !important;
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+}
+
+#btn-submit:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255, 255, 255, 0.2);
+}
+
+/* Secondary Buttons */
+#btn-hint,
+#btn-solution {
+    border-radius: 12px !important;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+}
+
+#btn-hint:hover,
+#btn-solution:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Mode Tabs */
+.mode-btn {
+    border-radius: 8px !important;
+    transition: all 0.3s ease;
+}
+
+/* ============================================
+   CHAT WIDGET ENHANCEMENTS
+   ============================================ */
+
+#chat-toggle {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+    box-shadow: 0 4px 30px rgba(139, 92, 246, 0.4);
+    transition: all 0.3s ease;
+}
+
+#chat-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 40px rgba(139, 92, 246, 0.5);
+}
+
+#chat-window {
+    background: rgba(24, 24, 27, 0.95) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(139, 92, 246, 0.1);
+}
+
+#chat-messages {
+    background: rgba(0, 0, 0, 0.3) !important;
+}
+
+#chat-input {
+    background: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 12px !important;
+}
+
+#chat-input:focus {
+    border-color: rgba(139, 92, 246, 0.5) !important;
+}
+
+#chat-send:not(:disabled) {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+    color: white !important;
+}
+
+/* ============================================
+   MODAL ENHANCEMENTS
+   ============================================ */
+
+#solution-modal>div {
+    background: rgba(24, 24, 27, 0.95) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================
+   FEEDBACK AREA ENHANCEMENTS
+   ============================================ */
+
+#feedback-area {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 16px !important;
+}
+
+/* ============================================
+   CUSTOM SCROLLBAR (Sleeker)
+   ============================================ */
+
 .custom-scrollbar::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-    background: #18181b;
+    background: transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #3f3f46;
-    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #52525b;
+    background: rgba(255, 255, 255, 0.2);
 }
 
-/* KaTeX Adjustments */
+/* ============================================
+   KATEX ADJUSTMENTS
+   ============================================ */
+
 .katex {
     font-size: 1.1em;
     color: #e4e4e7;
@@ -44,7 +359,10 @@ textarea,
     overflow-y: hidden;
 }
 
-/* Animations */
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -93,14 +411,43 @@ textarea,
     }
 }
 
-/* Print Styles */
+/* Subtle float animation for important elements */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+/* ============================================
+   CODE EDITOR ENHANCEMENTS
+   ============================================ */
+
+#code-editor {
+    background: rgba(13, 13, 16, 0.9) !important;
+    border-radius: 0 0 12px 12px;
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
 @media print {
     body {
-        background-color: white;
+        background-color: white !important;
+        background-image: none !important;
         color: black;
     }
 
-    /* Hide everything by default */
+    body::before {
+        display: none !important;
+    }
+
     header,
     aside,
     .editor-section,
@@ -108,7 +455,7 @@ textarea,
         display: none !important;
     }
 
-    /* SCENARIO 1: Printing the Problem Panel (when modal is NOT open) */
+    /* SCENARIO 1: Printing the Problem Panel */
     body:not(.has-modal-open) #problem-panel {
         display: block !important;
         position: absolute;
@@ -120,21 +467,23 @@ textarea,
         border: none !important;
         margin: 0 !important;
         padding: 20px !important;
+        background: white !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
     }
 
     body:not(.has-modal-open) main {
         display: block;
         margin: 0;
-        padding: 0;
+        padding: 0 !important;
         overflow: visible;
     }
 
-    /* Hide solution modal when printing problem */
     body:not(.has-modal-open) #solution-modal {
         display: none !important;
     }
 
-    /* SCENARIO 2: Printing the Solution Modal (when modal IS open) */
+    /* SCENARIO 2: Printing the Solution Modal */
     body.has-modal-open main {
         display: none !important;
     }

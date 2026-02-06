@@ -46,7 +46,7 @@
     <header
         class="h-14 border-b border-surfaceHighlight flex items-center px-6 bg-surface/50 backdrop-blur-sm z-10 shrink-0 print-hidden">
         <div class="flex items-center gap-3 text-primary">
-            <div class="bg-primary text-black p-1.5 rounded">
+            <div class="bg-primary text-black p-1.5 rounded-lg">
                 <i data-lucide="cpu" class="w-5 h-5" stroke-width="2.5"></i>
             </div>
             <span class="font-bold tracking-tight text-lg">CP Coach AI</span>
@@ -60,37 +60,41 @@
                 </button>
             </div>
             <button id="btn-login"
-                class="px-3 py-1.5 rounded bg-primary text-black font-bold hover:bg-white transition-all">
+                class="px-3 py-1.5 rounded-lg bg-primary text-black font-bold hover:bg-white transition-all">
                 Đăng nhập
             </button>
             <div class="h-4 w-[1px] bg-surfaceHighlight"></div>
-            <span class="text-muted">Sức mạnh của Gemini 3</span>
+            <span class="text-muted flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                Gemini 3 AI
+            </span>
         </div>
     </header>
 
     <!-- Auth Modal -->
     <div id="auth-modal"
         class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-surface border border-surfaceHighlight rounded-lg w-full max-w-md shadow-2xl">
+        <div class="bg-surface border border-surfaceHighlight rounded-xl w-full max-w-md shadow-2xl relative">
             <div class="p-6">
                 <h2 class="text-2xl font-bold text-primary mb-6" id="auth-modal-title">Đăng nhập</h2>
 
                 <div id="auth-error"
-                    class="hidden mb-4 p-3 bg-red-500/10 border border-red-500/50 rounded text-red-400 text-sm"></div>
+                    class="hidden mb-4 p-3 bg-red-500/10 border border-red-500/50 rounded-lg text-red-400 text-sm">
+                </div>
 
                 <form id="auth-form" class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium text-muted mb-2">Tên đăng nhập</label>
                         <input type="text" id="auth-username" required
-                            class="w-full bg-background border border-surfaceHighlight rounded px-3 py-2 text-text focus:outline-none focus:border-muted">
+                            class="w-full bg-background border border-surfaceHighlight rounded-lg px-3 py-2 text-text focus:outline-none focus:border-muted">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-muted mb-2">Mật khẩu</label>
                         <input type="password" id="auth-password" required
-                            class="w-full bg-background border border-surfaceHighlight rounded px-3 py-2 text-text focus:outline-none focus:border-muted">
+                            class="w-full bg-background border border-surfaceHighlight rounded-lg px-3 py-2 text-text focus:outline-none focus:border-muted">
                     </div>
                     <button type="submit" id="auth-submit"
-                        class="w-full py-3 rounded font-bold text-sm uppercase bg-primary text-black hover:bg-white transition-all">
+                        class="w-full py-3 rounded-lg font-bold text-sm uppercase bg-primary text-black hover:bg-white transition-all">
                         Đăng nhập
                     </button>
                 </form>
@@ -116,23 +120,63 @@
             class="w-64 bg-background border-r border-surfaceHighlight p-4 hidden md:flex flex-col shrink-0 print-hidden"
             id="control-panel">
             <div class="w-full h-full flex flex-col gap-6 p-1">
-                <!-- Tabs -->
-                <div class="flex bg-surface rounded p-1 border border-surfaceHighlight">
-                    <button
-                        class="flex-1 flex items-center justify-center gap-2 py-1.5 rounded text-xs font-bold transition-all bg-accent text-white shadow mode-btn"
-                        data-mode="standard" title="Tạo đề theo chủ đề">
-                        <i data-lucide="list-filter" class="w-3 h-3"></i> <span class="hidden sm:inline">Chủ Đề</span>
+                <!-- Mode Selector (Dropdown Popup) -->
+                <div class="relative" id="mode-selector-container">
+                    <button id="mode-selector-btn"
+                        class="w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl bg-surface border border-surfaceHighlight hover:border-muted/50 transition-all group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-accent/50 flex items-center justify-center">
+                                <i data-lucide="list-filter" class="w-4 h-4 text-primary" id="mode-icon"></i>
+                            </div>
+                            <div class="text-left">
+                                <div class="text-xs font-bold text-text" id="mode-label">Chủ Đề</div>
+                                <div class="text-[10px] text-muted">Tạo đề theo chủ đề có sẵn</div>
+                            </div>
+                        </div>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-muted group-hover:text-text transition-all"
+                            id="mode-chevron"></i>
                     </button>
-                    <button
-                        class="flex-1 flex items-center justify-center gap-2 py-1.5 rounded text-xs font-bold transition-all text-muted hover:text-text mode-btn"
-                        data-mode="custom" title="Tạo đề tùy chỉnh">
-                        <i data-lucide="sparkles" class="w-3 h-3"></i> <span class="hidden sm:inline">Tự Chọn</span>
-                    </button>
-                    <button
-                        class="flex-1 flex items-center justify-center gap-2 py-1.5 rounded text-xs font-bold transition-all text-muted hover:text-text mode-btn"
-                        data-mode="history" title="Lịch sử đề bài">
-                        <i data-lucide="history" class="w-3 h-3"></i> <span class="hidden sm:inline">Lịch Sử</span>
-                    </button>
+
+                    <!-- Popup Menu -->
+                    <div id="mode-popup"
+                        class="absolute top-full left-0 right-0 mt-2 bg-surface border border-surfaceHighlight rounded-xl shadow-2xl z-50 hidden overflow-hidden">
+                        <button
+                            class="mode-btn w-full flex items-center gap-3 px-4 py-3 hover:bg-accent/30 transition-all border-b border-surfaceHighlight"
+                            data-mode="standard">
+                            <div class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                                <i data-lucide="list-filter" class="w-4 h-4 text-blue-400"></i>
+                            </div>
+                            <div class="text-left flex-1">
+                                <div class="text-sm font-bold text-text">Chủ Đề</div>
+                                <div class="text-xs text-muted">Tạo đề theo chủ đề có sẵn</div>
+                            </div>
+                            <i data-lucide="check" class="w-4 h-4 text-green-400 mode-check"></i>
+                        </button>
+                        <button
+                            class="mode-btn w-full flex items-center gap-3 px-4 py-3 hover:bg-accent/30 transition-all border-b border-surfaceHighlight"
+                            data-mode="custom">
+                            <div class="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center">
+                                <i data-lucide="sparkles" class="w-4 h-4 text-purple-400"></i>
+                            </div>
+                            <div class="text-left flex-1">
+                                <div class="text-sm font-bold text-text">Tự Chọn</div>
+                                <div class="text-xs text-muted">Tạo đề tùy chỉnh theo yêu cầu</div>
+                            </div>
+                            <i data-lucide="check" class="w-4 h-4 text-green-400 mode-check hidden"></i>
+                        </button>
+                        <button
+                            class="mode-btn w-full flex items-center gap-3 px-4 py-3 hover:bg-accent/30 transition-all"
+                            data-mode="history">
+                            <div class="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center">
+                                <i data-lucide="history" class="w-4 h-4 text-orange-400"></i>
+                            </div>
+                            <div class="text-left flex-1">
+                                <div class="text-sm font-bold text-text">Lịch Sử</div>
+                                <div class="text-xs text-muted">Xem lại các đề đã tạo</div>
+                            </div>
+                            <i data-lucide="check" class="w-4 h-4 text-green-400 mode-check hidden"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Config Views -->
@@ -220,8 +264,14 @@
             </div>
         </aside>
 
+        <!-- Resize Divider: Sidebar -->
+        <div id="resize-sidebar" class="resize-divider resize-divider-vertical hidden md:flex"
+            title="Kéo để thay đổi kích thước">
+            <div class="resize-handle"></div>
+        </div>
+
         <!-- Content Area -->
-        <div class="flex-1 flex flex-col md:flex-row h-full overflow-hidden relative">
+        <div class="flex-1 flex flex-col md:flex-row h-full overflow-hidden relative" id="content-area">
 
             <!-- Problem Panel -->
             <section
@@ -282,8 +332,15 @@
                 </div>
             </section>
 
+            <!-- Resize Divider: Problem/Editor -->
+            <div id="resize-panels" class="resize-divider resize-divider-vertical hidden md:flex"
+                title="Kéo để thay đổi kích thước">
+                <div class="resize-handle"></div>
+            </div>
+
             <!-- Editor Panel -->
-            <section class="flex-1 h-1/2 md:h-full md:w-1/2 p-6 bg-[#0c0c0e] editor-section print-hidden">
+            <section class="flex-1 h-1/2 md:h-full md:w-1/2 p-6 bg-[#0c0c0e] editor-section print-hidden"
+                id="editor-panel">
                 <div class="h-full flex flex-col gap-4">
                     <!-- Code Area -->
                     <div
@@ -394,10 +451,17 @@
                     <p class="text-[10px] text-muted">Hỏi đáp về thuật toán & Code</p>
                 </div>
             </div>
-            <button id="chat-close"
-                class="p-1.5 rounded hover:bg-surfaceHighlight text-muted hover:text-text transition-colors">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
+            <div class="flex items-center gap-1">
+                <a href="/chat.html" target="_blank" id="chat-expand"
+                    class="p-1.5 rounded hover:bg-surfaceHighlight text-muted hover:text-text transition-colors"
+                    title="Mở rộng ra trang mới">
+                    <i data-lucide="maximize-2" class="w-5 h-5"></i>
+                </a>
+                <button id="chat-close"
+                    class="p-1.5 rounded hover:bg-surfaceHighlight text-muted hover:text-text transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
         </div>
         <div id="chat-messages" class="flex-1 overflow-y-auto p-4 custom-scrollbar space-y-4 bg-[#0c0c0e]">
             <!-- Messages -->

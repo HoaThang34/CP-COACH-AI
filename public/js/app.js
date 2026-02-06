@@ -4,6 +4,7 @@ import { state, Difficulty } from './state.js';
 import { API } from './api.js';
 import { UI } from './ui.js';
 import { AuthManager } from './auth.js';
+import { initResizePanels } from './resize.js';
 
 let authManager;
 let currentHistoryId = null; // Track current problem's history ID
@@ -11,6 +12,7 @@ let currentHistoryId = null; // Track current problem's history ID
 function init() {
     authManager = new AuthManager();
     UI.initIcons();
+    initResizePanels(); // Initialize resizable panels
     setupEventListeners();
     updateUI();
 
@@ -30,6 +32,24 @@ function updateUI() {
 }
 
 function setupEventListeners() {
+    // Mode Selector Popup Toggle
+    const modeSelectorBtn = document.getElementById('mode-selector-btn');
+    const modePopup = document.getElementById('mode-popup');
+
+    if (modeSelectorBtn && modePopup) {
+        modeSelectorBtn.onclick = (e) => {
+            e.stopPropagation();
+            modePopup.classList.toggle('hidden');
+        };
+
+        // Close popup when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!modeSelectorBtn.contains(e.target) && !modePopup.contains(e.target)) {
+                modePopup.classList.add('hidden');
+            }
+        });
+    }
+
     // Mode Switching
     document.querySelectorAll('.mode-btn').forEach(btn => {
         btn.onclick = () => {
