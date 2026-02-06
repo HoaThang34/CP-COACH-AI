@@ -8,7 +8,11 @@ app = Flask(__name__, static_folder='../public', static_url_path='')
 CORS(app)
 
 @app.route('/')
-def serve_index():
+def serve_welcome():
+    return send_from_directory(app.static_folder, 'welcome.html')
+
+@app.route('/app')
+def serve_app():
     return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/<path:path>')
@@ -61,4 +65,4 @@ def handle_chat():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, port=3000)
+    app.run(debug=True, port=3434)

@@ -28,7 +28,7 @@ if %errorlevel% neq 0 (
 :: Open Browser
 echo [INFO] Opening Browser...
 timeout /t 3 >nul
-start http://localhost:3000
+start http://localhost:3434
 
 :: Start Server
 echo [INFO] Starting Flask Server...
