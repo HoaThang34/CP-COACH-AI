@@ -215,13 +215,33 @@ function setupEventListeners() {
         UI.toggleChat(false);
     };
 
+    // Enable/disable chat send button based on input
+    document.getElementById('chat-input').oninput = (e) => {
+        const btn = document.getElementById('chat-send');
+        const hasText = e.target.value.trim().length > 0;
+        btn.disabled = !hasText;
+        if (hasText) {
+            btn.classList.remove('bg-surfaceHighlight', 'text-muted', 'cursor-not-allowed');
+            btn.classList.add('bg-primary', 'text-black', 'hover:bg-white');
+        } else {
+            btn.classList.add('bg-surfaceHighlight', 'text-muted', 'cursor-not-allowed');
+            btn.classList.remove('bg-primary', 'text-black', 'hover:bg-white');
+        }
+    };
+
     document.getElementById('chat-form').onsubmit = async (e) => {
         e.preventDefault();
         const input = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('chat-send');
         const text = input.value.trim();
         if (!text) return;
 
         input.value = '';
+        // Reset send button to disabled state
+        sendBtn.disabled = true;
+        sendBtn.classList.add('bg-surfaceHighlight', 'text-muted', 'cursor-not-allowed');
+        sendBtn.classList.remove('bg-primary', 'text-black', 'hover:bg-white');
+
         state.chatMessages.push({ role: 'user', text });
         UI.appendChatMessage('user', text);
         UI.setChatLoading(true);

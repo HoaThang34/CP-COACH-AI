@@ -4,6 +4,10 @@ __pycache__/
 *$py.class
 venv/
 .env
+.env.local
+
+# Database
+database.db
 
 # MacOS
 .DS_Store
