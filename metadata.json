@@ -1,0 +1,5 @@
+{
+  "name": "CP Coach AI",
+  "description": "An AI-powered competitive programming trainer that generates problems and analyzes algorithmic thinking without test cases.",
+  "requestFramePermissions": []
+}
